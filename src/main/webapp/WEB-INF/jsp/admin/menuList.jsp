@@ -18,7 +18,29 @@
 		alert(prdNo);
 	}
 	function btnSave() {
+		event.preventDefault();
 		alert("저장되었습니다.");
+		var form = $('#frmMenu')[0];
+		var paramData = new FormData(form);
+		
+		$.ajax({
+			url : '/admin/menu/add',
+			data : paramData,
+			method : 'POST',
+			enctype : 'multipart/form-data',
+			contentType : false,
+			processData : false,
+			
+			success : function(data){
+				alert("성공");
+			},
+			error : function(data){
+				alert("에러");
+			},
+			complete : function(data){
+				console.log(data.responseText);
+			}
+		})
 	}
 </script>
 
@@ -132,7 +154,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="card-body card-block">
-								<form if="frmMenu" class="form-horizontal">
+								<form id="frmMenu" class="form-horizontal">
 									<div class="row form-group">
 										<div class="col col-md-3">
 											<label class=" form-control-label">메뉴번호</label>
