@@ -3,12 +3,14 @@ package edu.sungil.foods.web.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.sungil.foods.web.domain.AdminMapper;
 import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.schMenuInfo;
 
 @Service
 public class AdminService {
@@ -32,6 +34,10 @@ public class AdminService {
 		}
 		menuInfo.setFileNm(fileNm);
 		adminMapper.insertMenu(menuInfo);
+	}
+	
+	public List<MenuInfo> getMenuList(schMenuInfo schMenuInfo) {
+		return adminMapper.selectMenuList(schMenuInfo);
 	}
 	
 }

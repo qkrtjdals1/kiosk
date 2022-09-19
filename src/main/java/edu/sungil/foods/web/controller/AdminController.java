@@ -1,6 +1,10 @@
 package edu.sungil.foods.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.schMenuInfo;
 import edu.sungil.foods.web.service.AdminService;
 
 /**
@@ -41,6 +46,12 @@ public class AdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/menu",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<MenuInfo>> getMenulist(schMenuInfo schMenuInfo){
+		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(schMenuInfo), HttpStatus.OK);
 	}
 	
 	
