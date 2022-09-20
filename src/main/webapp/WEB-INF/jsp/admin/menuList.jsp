@@ -64,8 +64,8 @@
 							<h3 class="title-5 m-b-35">메뉴목록</h3>
 							<div class="table-data__tool">
 								<div class="table-data__tool-left">
-									<input type="text" placeholder="메뉴번호" class="au-btn-filter">
-									<input type="text" placeholder="메뉴명" class="au-btn-filter">
+									<input id="schMenuNo" type="text" placeholder="메뉴번호" class="au-btn-filter">
+									<input id="schMenuNm" type="text" placeholder="메뉴명" class="au-btn-filter">
 								</div>
 								<div class="table-data__tool-right">
 									<button class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -81,24 +81,23 @@
 								<table id="tblMenu" class="table table-data2">
 									<thead>
 										<tr>
-											<th>메뉴번호</th>
-											<th>메뉴명</th>
-											<th>단가</th>
-											<th>메뉴설명</th>
-											<th>메뉴재고</th>
-											<th>전시여부</th>
-											<th></th>
+											<th data-field="menuNo">메뉴번호</th>
+											<th data-field="menuNm">메뉴명</th>
+											<th data-field="menuPrc">단가</th>
+											<th data-field="menuDesc">메뉴설명</th>
+											<th data-field="menuStockQty">메뉴재고</th>
+											<th data-field="menuDispYn">전시여부</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr class="tr-shadow" onclick='showPopup(1)'
 											data-toggle="modal" data-target="#largeModal">
-											<td>2</td>
-											<td>춘천 국물 닭갈비 떡뽁이</td>
-											<td>2,000</td>
-											<td class="desc">닭갈비와 떡볶이의 오묘한 조화</td>
-											<td>100</td>
-											<td>전시</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
 										</tr>
 										<tr class="spacer"></tr>
 									</tbody>
@@ -199,7 +198,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary" id="menuAlert" onclick="menuAlert()">저장</button>
+							<button id="btnSave" type="button" class="btn btn-primary" id="menuAlert">저장</button>
 						</div>
 					</div>
 				</div>
@@ -210,11 +209,34 @@
 		</div>
 </body>
 <script type="text/javascript">
+
+	var menuData = [];
+	
+	$(document).ready(function(){
+		$('#tblMenu').bootstrapTable({
+			data: menuData
+		});
+		$('#tblMenu').bootstrapTable('load', menuData);
+		
+		$("#tblMenu").delegate("tr", "click", function(){
+			
+			var tr = $(this);
+			var td = tr.children();
+			var menuNo = td.eq(0).text();
+			
+			alert(menuNo);
+		});
+		
+		
+	});
+	
+	
+
 	function showPopup(prdNo) {
 		alert(prdNo);
 	}
 	
-	function btnSave() {
+	$("#btnSave").click(function(){
 		event.preventDefault();
 		
 		if(!menuAlert()) {
@@ -243,7 +265,7 @@
 				console.log(data.responseText);
 			}
 		})
-	}
+	})
 	
 	function menuAlert() {
 		if(!data.menuNm.value) {
@@ -266,8 +288,39 @@
 	
 	$("#btnSearch").click(function(){
 		event.preventDefault();
-		alert("검색하시겠습니까?");
+		
+		$.ajax({
+			url : '/admin/menu',
+			method : 'GET',
+			data : {
+				menuNo : $("#schMenuNo").val(),
+				menuNm : $("#schMenuNm").val()
+			},
+			success : function(data) {
+				if(data === "") {
+					alert("메뉴가 존재하지 않습니다.");
+				} else {
+					menuData = data;
+				}
+			},
+			complete : function(data) {
+				$('#tblMenu').bootstrapTable('load', menuData);
+			}
+				   
+		});
+		
+		
+		
+		
+		
 	})
 	
 </script>
 </html>
+
+
+
+
+
+
+

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class schMenuInfo {
 
-	private long menuNo;
+	private Long menuNo;
 	private String menuNm;
 	
 }
