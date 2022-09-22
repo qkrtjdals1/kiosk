@@ -5,14 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import edu.sungil.foods.web.domain.dto.MenuInfo;
-import edu.sungil.foods.web.domain.dto.schMenuInfo;
+import edu.sungil.foods.web.domain.dto.SchMenuInfo;
 
 @Mapper
 public interface AdminMapper {
 	void insertMenu(MenuInfo menuInfo);
 
-	List<MenuInfo> selectMenuList(schMenuInfo schMenuInfo);
-	
+	List<MenuInfo> selectMenuList(SchMenuInfo schMenuInfo);
+
+	void updateMenu(MenuInfo menuInfo);
+
 	
 	
 	

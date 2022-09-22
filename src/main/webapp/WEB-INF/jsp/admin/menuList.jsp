@@ -129,7 +129,8 @@
 											<label class=" form-control-label">메뉴번호</label>
 										</div>
 										<div class="col-12 col-md-9">
-											<p class="form-control-static" id="menuNm" name="menuNm">1</p>
+											<input type="text" id="menuNo" name="menuNo" readonly
+												placeholder="메뉴 번호" class="form-control">
 										</div>
 									</div>
 									<div class="row form-group">
@@ -223,8 +224,31 @@
 			var tr = $(this);
 			var td = tr.children();
 			var menuNo = td.eq(0).text();
-			
 			alert(menuNo);
+			var pUrl = '/admin/menu/' + menuNo;
+			
+			$.ajax({
+				url : pUrl,
+				method : 'GET',
+				dataType : 'Json',
+				success : function(data){
+					console.log(data);
+					alert('성공');
+					$('#menuNo').val(data.menuNo);
+					$('#menuNm').val(data.menuNm);
+					$('#menuPrc').val(data.menuPrc);
+					$('#menuDesc').val(data.menuDesc);
+					$('#menuStockQty').val(data.menuStockQty);
+					//$('#menuDispYn').val(data.menuDispYn);
+					$(":radio[name='menuDispYn'][value="+ data.menuDispYn +"]").attr('checkd', true);
+					$('#largeModal').modal('toggle');
+					
+				},
+				error : function(data){
+					alert('에러');
+				}
+			});
+			
 		});
 		
 		

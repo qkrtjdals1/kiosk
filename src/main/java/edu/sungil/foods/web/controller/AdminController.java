@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.sungil.foods.web.domain.dto.MenuInfo;
-import edu.sungil.foods.web.domain.dto.schMenuInfo;
+import edu.sungil.foods.web.domain.dto.SchMenuInfo;
 import edu.sungil.foods.web.service.AdminService;
 
 /**
@@ -50,12 +51,26 @@ public class AdminController {
 	
 	@RequestMapping(value="/menu",method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<MenuInfo>> getMenulist(schMenuInfo schMenuInfo){
-		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(schMenuInfo), HttpStatus.OK);
+	public ResponseEntity<List<MenuInfo>> getMenulist(SchMenuInfo schMenuInfo){
+		List<MenuInfo> list = adminService.getMenuList(schMenuInfo);
+		return new ResponseEntity<List<MenuInfo>>(list, HttpStatus.OK);
 	}
 	
-	
-	
+	@RequestMapping(value="/menu/{menuNo}",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<MenuInfo> getMenu(
+			@PathVariable("menuNo") Long menuNo
+			){
+		MenuInfo menuInfo = adminService.getMenu(menuNo);
+		return new ResponseEntity<MenuInfo>(menuInfo, HttpStatus.OK);
+	}
+
 	
 	
 }
+
+
+
+
+
+

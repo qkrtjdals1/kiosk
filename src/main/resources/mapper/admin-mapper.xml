@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+        
 <mapper namespace="edu.sungil.foods.web.domain.AdminMapper">
 	
 	<insert id = "insertMenu" parameterType = "edu.sungil.foods.web.domain.dto.MenuInfo">
@@ -24,13 +24,14 @@
 		
 	</insert>
 	
-	<select id="selectMenuList" resultType="edu.sungil.foods.web.domain.dto.MenuInfo" parameterType="edu.sungil.foods.web.domain.dto.schMenuInfo">
+	<select id="selectMenuList" resultType="edu.sungil.foods.web.domain.dto.MenuInfo" parameterType="edu.sungil.foods.web.domain.dto.SchMenuInfo">
 		SELECT MENU_NO,
 			   MENU_NM,
 			   MENU_PRC,
 			   MENU_DESC,
 			   MENU_STOCK_QTY,
-			   MENU_DISP_YN
+			   MENU_DISP_YN,
+			   MENU_IMG_NM AS FILE_NM
 		FROM TB_MENU
 		WHERE 1=1
 		<if test="menuNo !='' and menuNo != null">
@@ -42,4 +43,23 @@
 	
 	</select>
 	
+	<update id="updateMenu" parameterType = "edu.sungil.foods.web.domain.dto.MenuInfo">
+		update tb_menu
+			set MENU_NM = #{menuNm},
+				MENU_PRC = #{menuPrc},
+				MENU_DESC = #{menuDesc},
+				MENU_STOCK_QTY = #{menuStockQty},
+				MENU_DISP_YN = #{menuDispYn}
+			where MENU_NO = #{menuNo}
+	</update>
+	
+	
 </mapper> 
+
+
+
+
+
+
+
+

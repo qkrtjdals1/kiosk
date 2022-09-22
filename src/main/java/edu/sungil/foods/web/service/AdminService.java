@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import edu.sungil.foods.web.domain.AdminMapper;
 import edu.sungil.foods.web.domain.dto.MenuInfo;
-import edu.sungil.foods.web.domain.dto.schMenuInfo;
+import edu.sungil.foods.web.domain.dto.SchMenuInfo;
 
 @Service
 public class AdminService {
@@ -21,6 +21,22 @@ public class AdminService {
 	AdminMapper adminMapper;
 	
 	public void addMenu(MenuInfo menuInfo) {
+		
+		
+		if(menuInfo.getMenuNo() != null) {
+			//수정
+			this.modMenu(menuInfo);
+		} else {
+			//신규등록
+			this.addNewMenu(menuInfo);
+		}
+	}
+	
+	private void modMenu(MenuInfo menuInfo) {
+		adminMapper.updateMenu(menuInfo);
+	}
+	
+	private void addNewMenu(MenuInfo menuInfo) {
 		String fileNm = "";
 		if(!(menuInfo.getMenuImgNm() == null)) {
 			fileNm = String.valueOf(System.currentTimeMillis())
@@ -36,8 +52,14 @@ public class AdminService {
 		adminMapper.insertMenu(menuInfo);
 	}
 	
-	public List<MenuInfo> getMenuList(schMenuInfo schMenuInfo) {
+	public List<MenuInfo> getMenuList(SchMenuInfo schMenuInfo) {
 		return adminMapper.selectMenuList(schMenuInfo);
+	}
+
+	public MenuInfo getMenu(Long menuNo) {
+		SchMenuInfo schMenuInfo = new SchMenuInfo();
+		schMenuInfo.setMenuNo(menuNo);
+		return adminMapper.selectMenuList(schMenuInfo).get(0);
 	}
 	
 }
