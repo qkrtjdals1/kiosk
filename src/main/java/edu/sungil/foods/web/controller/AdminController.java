@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import edu.sungil.foods.web.domain.dto.MenuInfo;
 import edu.sungil.foods.web.domain.dto.OrdInfo;
 import edu.sungil.foods.web.domain.dto.SchMenuInfo;
+import edu.sungil.foods.web.domain.dto.SchOrdInfo;
 import edu.sungil.foods.web.service.AdminService;
 
 /**
@@ -75,6 +76,14 @@ public class AdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@RequestMapping(value="/order",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<OrdInfo>> getOrdlist(SchOrdInfo schOrdInfo){
+		List<OrdInfo> list = adminService.getOrdList(schOrdInfo);
+		return new ResponseEntity<List<OrdInfo>>(list, HttpStatus.OK);
 	}
 	
 	
