@@ -288,7 +288,7 @@
 			complete : function(data){
 				console.log(data.responseText);
 			}
-		})
+		});
 	})
 	
 	function menuAlert() {

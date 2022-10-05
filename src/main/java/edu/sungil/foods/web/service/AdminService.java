@@ -73,5 +73,11 @@ public class AdminService {
 		
 		return adminMapper.selectOrdList(schOrdInfo);
 	}
+
+	public void updateStatus(OrdInfo ordInfo) {
+		// TODO Auto-generated method stub
+		adminMapper.updateStatus(ordInfo);
+		
+	}
 	
 }

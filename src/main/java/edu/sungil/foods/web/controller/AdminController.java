@@ -86,6 +86,18 @@ public class AdminController {
 		return new ResponseEntity<List<OrdInfo>>(list, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/status",method=RequestMethod.POST)
+	@ResponseBody
+	public void updateStatus(OrdInfo ordInfo) {
+		try {
+			adminService.updateStatus(ordInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 }
 

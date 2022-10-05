@@ -106,13 +106,13 @@
                                     <tbody id="ordList">
                                     <template id="tmpOrdList">
                                     	<tr class="tr-shadow">
-                                            <td class="ordNo">2</td>
-                                            <td class="ordDt">2022-09-27 02:12</td>
-                                            <td class="menuNo">1</td>
-                                            <td class="desc menuNm">매운떡복이</td>
-                                            <td class="ordQty">2</td>
-                                            <td class="ordAmt">3,000</td>
-                                            <td><span class="ordStat">결제완료</span></td>
+                                            <td class="ordNo"></td>
+                                            <td class="ordDt"></td>
+                                            <td class="menuNo"></td>
+                                            <td class="desc menuNm"></td>
+                                            <td class="ordQty"></td>
+                                            <td class="ordAmt"></td>
+                                            <td><span class="ordStat"></span></td>
                                             <td>
                                                 <div class="table-data-feature">
                                                     <button name="btnCmp" class="btn btn-success">
@@ -163,6 +163,15 @@
 						tmpTr.find('.ordAmt').text(order.ordAmt);
 						tmpTr.find('.ordStat').text(order.ordStat);
 						
+						if(order.ordStat === "접수") {
+							tmpTr.find('.ordStat').addClass('status--denied');
+							tmpTr.find("button[name=btnCmp]").attr('onclick', 'ordCmp('+order.ordNo+')');
+						} else {
+							tmpTr.find('.ordStat').addClass('status--process');
+							tmpTr.find("button[name=btnCmp]").attr('disabled', 'disabled');
+						}
+						
+						
 						$('#ordList').append(tmpTr);
 						
 					});
@@ -174,8 +183,40 @@
 			
 		});
 		
-	})
+	});
+	
+	ordCmp = function(ordNo){
+		$.ajax({
+			url : '/admin/status',
+			data : {ordNo : ordNo},
+			method : 'POST',
+			success : function(data){
+				alert("성공");
+			},
+			error : function(data){
+				alert("에러");
+			}
+		});
+	}
 	
 	
 </script>
+
+
+
+
+
+
+
+
+
+
 </html>
+
+
+
+
+
+
+
+
